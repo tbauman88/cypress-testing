@@ -18,5 +18,8 @@
   "homepage": "https://github.com/tbauman88/cypress-testing#readme",
   "dependencies": {
     "cypress": "^5.1.0"
+  },
+  "devDependencies": {
+    "cypress-file-upload": "^4.1.1"
   }
 }

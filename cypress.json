@@ -1,1 +1,6 @@
-{}
+{
+  "baseUrl": "http://www.vehikl.com",
+  "viewportWidth": 1680,
+  "viewportHeight": 1050,
+  "chromeWebSecurity": false
+}
