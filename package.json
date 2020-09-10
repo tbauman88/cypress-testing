@@ -1,0 +1,22 @@
+{
+  "name": "cypress-testing",
+  "version": "1.0.0",
+  "description": "Testing Vehikl website with Cypress.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbauman88/cypress-testing.git"
+  },
+  "author": "Tyler Bauman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbauman88/cypress-testing/issues"
+  },
+  "homepage": "https://github.com/tbauman88/cypress-testing#readme",
+  "dependencies": {
+    "cypress": "^5.1.0"
+  }
+}
