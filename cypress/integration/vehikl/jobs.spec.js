@@ -1,4 +1,3 @@
-// @ts-check
 import 'cypress-file-upload'
 
 describe('Vehikl Jobs', () => {
