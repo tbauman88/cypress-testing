@@ -6,12 +6,7 @@ describe('Contact Page', () => {
     'Thank your for reaching out to Vehikl. We’ll review your inquiry and respond to you soon.'
 
   beforeEach(() => {
-    cy.server({
-      method: 'POST',
-      delay: 1000,
-      status: 200,
-      response: {}
-    })
+    cy.server({ method: 'POST', delay: 1000, status: 200, response: {} })
   })
 
   it('should submit a contact message', () => {
