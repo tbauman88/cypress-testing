@@ -48,14 +48,22 @@ describe('Vehikl Jobs', () => {
 
     cy.get('button').contains('Submit').click()
 
-    // tip: log the request object to see everything it has in the console
-    cy.wait('@postApplication').then((result) => console.log({ postApplication: result }))
+    cy.wait('@postApplication')
+      .its('request.body')
+      .should((formData) => {
+        const formDataObject = {}
+        formData.forEach((value, key) => (formDataObject[key] = value))
+
+        // FormData converts null to a string
+        expect(formDataObject).to.eql({ ...applicationInput, resume: 'null' })
+      })
 
     cy.get('.confirmation-modal')
       .contains('Hello Colin DeCarlo')
       .should('contain.text', 'Hello Colin DeCarlo')
 
-    // cy.get('@postApplication').its('responseBody').should('deep.equal', applicationInput)
+    cy.get('@postApplication').its('responseBody').should('deep.equal', applicationInput)
+
     cy.get('@postApplication')
       .its('response.body')
       .should('not.deep.equal', { ...applicationInput, name: 'Attila Komarmoi' })
