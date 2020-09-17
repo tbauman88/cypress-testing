@@ -1,11 +1,20 @@
 import 'cypress-file-upload'
 
 describe('Vehikl Jobs', () => {
-  const comments =
-    'Lorem Ipsum is the single greatest threat. We are not - we are not keeping up with other websites. Lorem Ipsum best not make any more threats to your website. It will be met with fire and fury like the world has never seen. Does everybody know that pig named Lorem Ipsum? An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.'
+  const message =
+    'Does everybody know that pig named Lorem Ipsum? An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.'
+
+  const applicationInput = {
+    email: 'c.decarlo@vehikl.com',
+    location: 'London',
+    message,
+    name: 'Colin DeCarlo',
+    position: 'Full Stack Developer',
+    resume: null
+  }
 
   beforeEach(() => {
-    cy.server({ method: 'POST', delay: 1000, status: 200, response: {} })
+    cy.server({ method: 'POST', delay: 1000, status: 200, response: applicationInput })
   })
 
   it('should apply to the Full Stack Developer position', () => {
@@ -27,20 +36,28 @@ describe('Vehikl Jobs', () => {
     cy.get('#London').parent().click()
     cy.get('#London').should('be.checked')
 
-    cy.get('[id="name"]').type('Colin DeCarlo').should('have.value', 'Colin DeCarlo')
+    cy.get('[id="name"]').type(applicationInput.name).should('have.value', 'Colin DeCarlo')
 
     cy.get('[type="email"]')
-      .type('c.decarlo@vehikl.com')
+      .type(applicationInput.email)
       .should('have.value', 'c.decarlo@vehikl.com')
 
-    cy.get('#Comments').type(comments).should('have.value', comments)
+    cy.get('#Comments').type(applicationInput.message).should('have.value', message)
 
     cy.get('[type="file"]').attachFile('resume.pdf')
 
     cy.get('button').contains('Submit').click()
 
+    // tip: log the request object to see everything it has in the console
+    cy.wait('@postApplication').then((result) => console.log({ postApplication: result }))
+
     cy.get('.confirmation-modal')
       .contains('Hello Colin DeCarlo')
       .should('contain.text', 'Hello Colin DeCarlo')
+
+    // cy.get('@postApplication').its('responseBody').should('deep.equal', applicationInput)
+    cy.get('@postApplication')
+      .its('response.body')
+      .should('not.deep.equal', { ...applicationInput, name: 'Attila Komarmoi' })
   })
 })
